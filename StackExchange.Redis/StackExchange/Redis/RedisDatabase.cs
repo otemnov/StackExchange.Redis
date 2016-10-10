@@ -425,10 +425,22 @@ namespace StackExchange.Redis
             return ExecuteSync(msg, ResultProcessor.Boolean);
         }
 
-        public Task<bool> KeyExistsAsync(RedisKey key, CommandFlags flags = CommandFlags.None)
+	public Task<bool> KeyExistsAsync(RedisKey key, CommandFlags flags = CommandFlags.None)
         {
             var msg = Message.Create(Database, flags, RedisCommand.EXISTS, key);
             return ExecuteAsync(msg, ResultProcessor.Boolean);
+        }
+
+	public long KeysExists(RedisKey[] keys, CommandFlags flags = CommandFlags.None)
+        {
+            var msg = Message.Create(Database, flags, RedisCommand.EXISTS, keys);
+            return ExecuteSync(msg, ResultProcessor.Int64);
+        }
+
+	public Task<long> KeysExistsAsync(RedisKey[] keys, CommandFlags flags = CommandFlags.None)
+        {
+            var msg = Message.Create(Database, flags, RedisCommand.EXISTS, keys);
+            return ExecuteAsync(msg, ResultProcessor.Int64);
         }
 
         public bool KeyExpire(RedisKey key, TimeSpan? expiry, CommandFlags flags = CommandFlags.None)

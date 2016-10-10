@@ -300,6 +300,11 @@ namespace StackExchange.Redis
             return new CommandKeyMessage(db, flags, command, key);
         }
 
+        public static Message Create(int db, CommandFlags flags, RedisCommand command, RedisKey[] keys)
+        {
+            return new CommandKeysMessage(db, flags, command, keys);
+        }
+
         public static Message Create(int db, CommandFlags flags, RedisCommand command, RedisKey key0, RedisKey key1)
         {
             return new CommandKeyKeyMessage(db, flags, command, key0, key1);
@@ -870,6 +875,23 @@ namespace StackExchange.Redis
             {
                 physical.WriteHeader(Command, 1);
                 physical.Write(Key);
+            }
+        }
+        sealed class CommandKeysMessage : Message
+        {
+            private readonly RedisKey[] _keys;
+            public CommandKeysMessage(int db, CommandFlags flags, RedisCommand command, RedisKey[] keys) : base(db, flags, command)
+            {
+                _keys = keys;
+            }
+
+            internal override void WriteImpl(PhysicalConnection physical)
+            {
+                physical.WriteHeader(Command, _keys.Length);
+                for (int i = 0; i < _keys.Length; i++)
+                {
+                    physical.Write(_keys[i]);
+                }
             }
         }
         sealed class CommandValuesMessage : Message

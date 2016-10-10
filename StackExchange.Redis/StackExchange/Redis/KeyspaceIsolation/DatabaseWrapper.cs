@@ -157,6 +157,11 @@ namespace StackExchange.Redis.KeyspaceIsolation
             return Inner.KeyExists(ToInner(key), flags);
         }
 
+        public bool KeysExists(RedisKey[] keys, CommandFlags flags = CommandFlags.None)
+        {
+            return Inner.KeysExists(ToInner(keys), flags);
+        }
+
         public bool KeyExpire(RedisKey key, DateTime? expiry, CommandFlags flags = CommandFlags.None)
         {
             return Inner.KeyExpire(ToInner(key), expiry, flags);

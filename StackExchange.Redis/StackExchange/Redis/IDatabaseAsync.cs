@@ -208,6 +208,13 @@ namespace StackExchange.Redis
         Task<bool> KeyExistsAsync(RedisKey key, CommandFlags flags = CommandFlags.None);
 
         /// <summary>
+        /// Returns if key exists.
+        /// </summary>
+        /// <returns>1 if the key exists. 0 if the key does not exist.</returns>
+        /// <remarks>http://redis.io/commands/exists</remarks>
+        Task<bool> KeysExistsAsync(RedisKey[] keys, CommandFlags flags = CommandFlags.None);
+
+        /// <summary>
         /// Set a timeout on key. After the timeout has expired, the key will automatically be deleted. A key with an associated timeout is said to be volatile in Redis terminology.
         /// </summary>
         /// <remarks>If key is updated before the timeout has expired, then the timeout is removed as if the PERSIST command was invoked on key.
