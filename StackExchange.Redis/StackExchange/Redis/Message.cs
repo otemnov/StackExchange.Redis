@@ -877,23 +877,6 @@ namespace StackExchange.Redis
                 physical.Write(Key);
             }
         }
-        sealed class CommandKeysMessage : Message
-        {
-            private readonly RedisKey[] _keys;
-            public CommandKeysMessage(int db, CommandFlags flags, RedisCommand command, RedisKey[] keys) : base(db, flags, command)
-            {
-                _keys = keys;
-            }
-
-            internal override void WriteImpl(PhysicalConnection physical)
-            {
-                physical.WriteHeader(Command, _keys.Length);
-                for (int i = 0; i < _keys.Length; i++)
-                {
-                    physical.Write(_keys[i]);
-                }
-            }
-        }
         sealed class CommandValuesMessage : Message
         {
             private readonly RedisValue[] values;

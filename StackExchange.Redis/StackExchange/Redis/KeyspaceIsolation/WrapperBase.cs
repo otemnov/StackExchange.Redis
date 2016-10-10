@@ -159,7 +159,12 @@ namespace StackExchange.Redis.KeyspaceIsolation
             return Inner.KeyExistsAsync(ToInner(key), flags);
         }
 
-        public Task<bool> KeyExpireAsync(RedisKey key, DateTime? expiry, CommandFlags flags = CommandFlags.None)
+		public Task<long> KeysExistsAsync(RedisKey[] keys, CommandFlags flags = CommandFlags.None)
+		{
+			return Inner.KeysExistsAsync(ToInner(keys), flags);
+		}
+
+		public Task<bool> KeyExpireAsync(RedisKey key, DateTime? expiry, CommandFlags flags = CommandFlags.None)
         {
             return Inner.KeyExpireAsync(ToInner(key), expiry, flags);
         }
